@@ -1,0 +1,16 @@
+[
+{
+  "modid": "minecraftrpg",
+  "name": "Minecraft RPG",
+  "description": "Make Minecraft like an RPG",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["YannDub"],
+  "credits": "The Forge and FML guys, for making this example",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
