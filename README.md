@@ -6,10 +6,10 @@ is to make Minecraft like a RPG.
 ##Roadmap
 
 - Bestiary system
--- GUI
--- Network
+  - GUI
+  - Network
 
 - Quest system
--- GUI
--- Network
--- Command
+  - GUI
+  - Network
+  - Command
