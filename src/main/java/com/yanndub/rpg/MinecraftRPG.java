@@ -1,8 +1,8 @@
 package com.yanndub.rpg;
 
-import com.yanndub.rpg.capabilities.RPGPlayerCapabilities;
+import com.yanndub.rpg.capabilities.RPGBestiaryCapability;
 import com.yanndub.rpg.handler.RPGGuiHandler;
-import com.yanndub.rpg.network.RPGPacketPlayerCapabilities;
+import com.yanndub.rpg.network.RPGPacketBestiaryCapability;
 
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -22,8 +22,8 @@ public class MinecraftRPG
     public static final String MODID = "minecraftrpg";
     public static final String VERSION = "1.0";
     
-    @CapabilityInject(RPGPlayerCapabilities.class)
-    public static final Capability<RPGPlayerCapabilities> RPGPLAYER_CAP = null;
+    @CapabilityInject(RPGBestiaryCapability.class)
+    public static final Capability<RPGBestiaryCapability> RPGPLAYER_CAP = null;
     
     @SidedProxy(clientSide="com.yanndub.rpg.client.MinecraftRPGClient", serverSide="com.yanndub.rpg.server.MinecraftRPGServer")
     public static MinecraftRPGCommon proxy;
@@ -41,8 +41,8 @@ public class MinecraftRPG
 
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(MinecraftRPG.MODID);
     	
-    	network.registerMessage(RPGPacketPlayerCapabilities.ClientHandler.class, RPGPacketPlayerCapabilities.class, 3, Side.CLIENT);
-    	network.registerMessage(RPGPacketPlayerCapabilities.ServerHandler.class, RPGPacketPlayerCapabilities.class, 3, Side.SERVER);
+    	network.registerMessage(RPGPacketBestiaryCapability.ClientHandler.class, RPGPacketBestiaryCapability.class, 3, Side.CLIENT);
+    	network.registerMessage(RPGPacketBestiaryCapability.ServerHandler.class, RPGPacketBestiaryCapability.class, 3, Side.SERVER);
     }
     
     @EventHandler
@@ -51,6 +51,6 @@ public class MinecraftRPG
     	proxy.init();
     	
     	
-    	RPGPlayerCapabilities.register();
+    	RPGBestiaryCapability.register();
     }
 }

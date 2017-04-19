@@ -10,9 +10,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ScheduledPacketTask implements Runnable {
 	
 	private EntityPlayer player;
-	private RPGPacketPlayerCapabilities message;
+	private RPGPacketBestiaryCapability message;
 	
-	public ScheduledPacketTask(EntityPlayer player, RPGPacketPlayerCapabilities message) {
+	public ScheduledPacketTask(EntityPlayer player, RPGPacketBestiaryCapability message) {
 		this.player = player;
 		this.message = message;
 	}

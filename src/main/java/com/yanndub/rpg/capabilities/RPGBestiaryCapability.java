@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 
 import com.yanndub.rpg.MinecraftRPG;
 import com.yanndub.rpg.bestiary.RPGBestiary;
-import com.yanndub.rpg.network.RPGPacketPlayerCapabilities;
+import com.yanndub.rpg.network.RPGPacketBestiaryCapability;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,18 +16,19 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class RPGPlayerCapabilities implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
+public class RPGBestiaryCapability implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
 	
 	private RPGBestiary bestiary;
+	
 	private EntityPlayer player;
 	
-	public RPGPlayerCapabilities(EntityPlayer player) {
+	public RPGBestiaryCapability(EntityPlayer player) {
 		this.player = player;
 		this.bestiary = new RPGBestiary();
 	}
 	
 	public void sync() {
-		RPGPacketPlayerCapabilities packet = new RPGPacketPlayerCapabilities(this.getBestiary());
+		RPGPacketBestiaryCapability packet = new RPGPacketBestiaryCapability(this.getBestiary());
 		if(!this.player.worldObj.isRemote) {
 			EntityPlayerMP playerMP = (EntityPlayerMP) this.player;
 			MinecraftRPG.network.sendTo(packet, playerMP);
@@ -71,29 +72,29 @@ public class RPGPlayerCapabilities implements ICapabilityProvider, INBTSerializa
 	}
 	
 	public static void register() {
-		CapabilityManager.INSTANCE.register(RPGPlayerCapabilities.class, new RPGPlayerCapabilities.Storage(), new RPGPlayerCapabilities.Factory());
+		CapabilityManager.INSTANCE.register(RPGBestiaryCapability.class, new RPGBestiaryCapability.Storage(), new RPGBestiaryCapability.Factory());
 	}
 	
-	private static class Storage implements Capability.IStorage<RPGPlayerCapabilities> {
+	private static class Storage implements Capability.IStorage<RPGBestiaryCapability> {
 
 		@Override
-		public NBTBase writeNBT(Capability<RPGPlayerCapabilities> capability, RPGPlayerCapabilities instance,
+		public NBTBase writeNBT(Capability<RPGBestiaryCapability> capability, RPGBestiaryCapability instance,
 				EnumFacing side) {
 			return null;
 		}
 
 		@Override
-		public void readNBT(Capability<RPGPlayerCapabilities> capability, RPGPlayerCapabilities instance,
+		public void readNBT(Capability<RPGBestiaryCapability> capability, RPGBestiaryCapability instance,
 				EnumFacing side, NBTBase nbt) {
 			
 		}
 		
 	}
 	
-	private static class Factory implements Callable<RPGPlayerCapabilities> {
+	private static class Factory implements Callable<RPGBestiaryCapability> {
 
 		@Override
-		public RPGPlayerCapabilities call() throws Exception {
+		public RPGBestiaryCapability call() throws Exception {
 			return null;
 		}
 		

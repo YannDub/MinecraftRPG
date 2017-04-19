@@ -3,7 +3,7 @@ package com.yanndub.rpg.events;
 import com.yanndub.rpg.MinecraftRPG;
 import com.yanndub.rpg.bestiary.RPGBestiary;
 import com.yanndub.rpg.bestiary.RPGBestiaryCard;
-import com.yanndub.rpg.capabilities.RPGPlayerCapabilities;
+import com.yanndub.rpg.capabilities.RPGBestiaryCapability;
 import com.yanndub.rpg.listeners.RPGBestiaryListener;
 
 import net.minecraft.entity.Entity;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class RPGPlayerEvent implements RPGBestiaryListener {
 	
-	private RPGPlayerCapabilities entityCapability(Entity entity) {
+	private RPGBestiaryCapability entityCapability(Entity entity) {
 		return entity.getCapability(MinecraftRPG.RPGPLAYER_CAP, null);
 	}
 	
@@ -56,8 +56,8 @@ public class RPGPlayerEvent implements RPGBestiaryListener {
 	public void onPlayerCloned(PlayerEvent.Clone event) {
 		if(event.isWasDeath()) {
 			if(event.getOriginal().hasCapability(MinecraftRPG.RPGPLAYER_CAP, null)) {
-				RPGPlayerCapabilities cap = this.entityCapability(event.getOriginal());
-				RPGPlayerCapabilities newCap = this.entityCapability(event.getEntityPlayer());
+				RPGBestiaryCapability cap = this.entityCapability(event.getOriginal());
+				RPGBestiaryCapability newCap = this.entityCapability(event.getEntityPlayer());
 				
 				newCap.setBestiary(cap.getBestiary());
 			}
@@ -76,7 +76,7 @@ public class RPGPlayerEvent implements RPGBestiaryListener {
 	public void onAttachCapability(AttachCapabilitiesEvent.Entity event) {
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 
-		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":RPGPLAYER_CAP"), new RPGPlayerCapabilities((EntityPlayer) event.getEntity()));
+		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":RPGPLAYER_CAP"), new RPGBestiaryCapability((EntityPlayer) event.getEntity()));
 	}
 
 	@Override

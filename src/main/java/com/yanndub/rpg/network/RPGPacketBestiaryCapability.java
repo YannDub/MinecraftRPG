@@ -10,15 +10,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class RPGPacketPlayerCapabilities implements IMessage {
+public class RPGPacketBestiaryCapability implements IMessage {
 	
 	private RPGBestiary bestiary;
 	
-	public RPGPacketPlayerCapabilities() {
+	public RPGPacketBestiaryCapability() {
 		this(new RPGBestiary());
 	}
 	
-	public RPGPacketPlayerCapabilities(RPGBestiary bestiary) {
+	public RPGPacketBestiaryCapability(RPGBestiary bestiary) {
 		super();
 		this.bestiary = bestiary;
 	}
@@ -49,20 +49,20 @@ public class RPGPacketPlayerCapabilities implements IMessage {
 		return this.bestiary;
 	}
 	
-	public static class ServerHandler implements IMessageHandler<RPGPacketPlayerCapabilities, IMessage> {
+	public static class ServerHandler implements IMessageHandler<RPGPacketBestiaryCapability, IMessage> {
 
 		@Override
-		public IMessage onMessage(RPGPacketPlayerCapabilities message, MessageContext ctx) {
+		public IMessage onMessage(RPGPacketBestiaryCapability message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(ctx.getServerHandler().playerEntity, message));
 			return null;
 		}
 		
 	}
 	
-	public static class ClientHandler implements IMessageHandler<RPGPacketPlayerCapabilities, IMessage> {
+	public static class ClientHandler implements IMessageHandler<RPGPacketBestiaryCapability, IMessage> {
 
 		@Override
-		public IMessage onMessage(RPGPacketPlayerCapabilities message, MessageContext ctx) {
+		public IMessage onMessage(RPGPacketBestiaryCapability message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(null, message));
 			return null;
 		}
