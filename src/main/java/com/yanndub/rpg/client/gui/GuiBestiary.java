@@ -16,38 +16,38 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Mouse;
 
 import com.yanndub.rpg.MinecraftRPG;
-import com.yanndub.rpg.capabilities.bestiary.RPGBestiary;
-import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCard;
+import com.yanndub.rpg.capabilities.bestiary.Bestiary;
+import com.yanndub.rpg.capabilities.bestiary.BestiaryCard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class RPGGuiBestiary extends GuiScreen {
+public class GuiBestiary extends GuiScreen {
 	
 	public static final int ID = 0;
 	
-	private RPGBestiary bestiary;
-    private RPGBestiaryCard card;
+	private Bestiary bestiary;
+    private BestiaryCard card;
     private EntityCreature selectedCreature;
-	private RPGGuiSlotBestiaryCard cardsList;
+	private GuiSlotBestiaryCard cardsList;
 
     private int listWidth;
 	private int selected = -1;
 	
-	public RPGGuiBestiary(EntityPlayer player) {
+	public GuiBestiary(EntityPlayer player) {
 		this.bestiary = player.getCapability(MinecraftRPG.RPGPLAYER_CAP, null).getBestiary();
 	}
 
 	public void initGui() {
 		this.listWidth = 0;
 
-		for(RPGBestiaryCard card : this.bestiary.getCreatures()) {
+		for(BestiaryCard card : this.bestiary.getCreatures()) {
 			listWidth = Math.max(this.listWidth, this.fontRendererObj.getStringWidth(card.getCreatureType()) + 10);
 		}
 
-		this.cardsList = new RPGGuiSlotBestiaryCard(this, this.width / 4, 16);
+		this.cardsList = new GuiSlotBestiaryCard(this, this.width / 4, 16);
         this.card = null;
 	}
 	
@@ -114,7 +114,7 @@ public class RPGGuiBestiary extends GuiScreen {
         return index == selected;
     }
 	
-	public RPGBestiary getBestiary() {
+	public Bestiary getBestiary() {
 		return this.bestiary;
 	}
 	

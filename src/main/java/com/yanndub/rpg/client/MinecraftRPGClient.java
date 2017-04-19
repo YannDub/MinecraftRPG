@@ -6,7 +6,7 @@ import java.util.Map;
 import org.lwjgl.input.Keyboard;
 
 import com.yanndub.rpg.MinecraftRPGCommon;
-import com.yanndub.rpg.client.event.RPGKeyboardEvent;
+import com.yanndub.rpg.client.event.KeyboardEvent;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +29,7 @@ public class MinecraftRPGClient extends MinecraftRPGCommon {
 		
 		this.addKey(OPEN_BESTIARY, "key.gui.bestiary", Keyboard.KEY_P, "key.categories.gameplay");
 		
-		MinecraftForge.EVENT_BUS.register(new RPGKeyboardEvent());
+		MinecraftForge.EVENT_BUS.register(new KeyboardEvent());
 		
 		
 	}

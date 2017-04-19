@@ -14,16 +14,16 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class RPGBestiaryCard {
+public class BestiaryCard {
 	
 	private String creatureType;
     private EntityCreature creature;
 	
-	public RPGBestiaryCard() {
+	public BestiaryCard() {
 		
 	}
 	
-	public RPGBestiaryCard(String creature) {
+	public BestiaryCard(String creature) {
 		this.creatureType = creature;
         this.creature = this.createCreature(creature);
 	}
@@ -60,8 +60,8 @@ public class RPGBestiaryCard {
 	}
 	
 	public boolean equals(Object obj) {
-		if(obj instanceof RPGBestiaryCard) {
-			RPGBestiaryCard card = (RPGBestiaryCard) obj;
+		if(obj instanceof BestiaryCard) {
+			BestiaryCard card = (BestiaryCard) obj;
 			return card.getCreatureType().equals(this.getCreatureType());
 		}
 		

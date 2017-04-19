@@ -7,12 +7,12 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraftforge.fml.client.GuiScrollingList;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-public class RPGGuiSlotBestiaryCard extends GuiScrollingList {
+public class GuiSlotBestiaryCard extends GuiScrollingList {
 
-	private RPGGuiBestiary parent;
+	private GuiBestiary parent;
 	private int listWidth;
 	
-	public RPGGuiSlotBestiaryCard(RPGGuiBestiary parent, int listWidth, int slotHeight) {
+	public GuiSlotBestiaryCard(GuiBestiary parent, int listWidth, int slotHeight) {
 		super(parent.getMinecraftInstance(), listWidth, parent.height, 0,  parent.height, 0, slotHeight, parent.width, parent.height);
 		this.parent = parent;
 		this.listWidth = listWidth;

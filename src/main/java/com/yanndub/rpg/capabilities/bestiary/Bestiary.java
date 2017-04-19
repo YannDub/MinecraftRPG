@@ -3,52 +3,52 @@ package com.yanndub.rpg.capabilities.bestiary;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yanndub.rpg.listeners.RPGBestiaryListener;
+import com.yanndub.rpg.listeners.BestiaryListener;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class RPGBestiary {
+public class Bestiary {
 	
-	private List<RPGBestiaryCard> bestiary;
-	private List<RPGBestiaryListener> listeners;
+	private List<BestiaryCard> bestiary;
+	private List<BestiaryListener> listeners;
 	
-	public RPGBestiary() {
-		this(new ArrayList<RPGBestiaryCard>());
+	public Bestiary() {
+		this(new ArrayList<BestiaryCard>());
 	}
 	
-	public RPGBestiary(List<RPGBestiaryCard> bestiary) {
-		this.listeners = new ArrayList<RPGBestiaryListener>();
+	public Bestiary(List<BestiaryCard> bestiary) {
+		this.listeners = new ArrayList<BestiaryListener>();
 		this.bestiary = bestiary;
 	}
 	
-	public void addRPGBestiaryListener(RPGBestiaryListener listener) {
+	public void addRPGBestiaryListener(BestiaryListener listener) {
 		if(!this.listeners.contains(listener))
 			this.listeners.add(listener);
 	}
 	
-	public void removeRPGBestiaryListener(RPGBestiaryListener listener) {
+	public void removeRPGBestiaryListener(BestiaryListener listener) {
 		this.listeners.remove(listener);
 	}
 	
 	public void addMonster(EntityPlayer player, EntityCreature creature) {
-		this.addMonster(player, new RPGBestiaryCard(EntityList.getEntityString(creature)));
+		this.addMonster(player, new BestiaryCard(EntityList.getEntityString(creature)));
 	}
 	
 	public void addMonster(EntityPlayer player, String name) {
-		this.addMonster(player, new RPGBestiaryCard(name));
+		this.addMonster(player, new BestiaryCard(name));
 	}
 	
-	public void addMonster(EntityPlayer player, RPGBestiaryCard card) {
+	public void addMonster(EntityPlayer player, BestiaryCard card) {
 		if(!this.bestiary.contains(card)) {
 			this.fireAddingMonster(player, card);
 			this.addMonster(card);
 		}
 	}
 	
-	public void addMonster(RPGBestiaryCard card) {
+	public void addMonster(BestiaryCard card) {
 		if(!this.bestiary.contains(card)) {
 			this.bestiary.add(card);
 		}
@@ -56,21 +56,21 @@ public class RPGBestiary {
 	
 	public String toString() {
 		String result = "";
-		for(RPGBestiaryCard each : this.bestiary) {
+		for(BestiaryCard each : this.bestiary) {
 			result += each.getCreature() + "\n";
 		}
 		
 		return result;
 	}
 	
-	public List<RPGBestiaryCard> getCreatures() {
+	public List<BestiaryCard> getCreatures() {
 		return this.bestiary;
 	}
 	
 	public NBTTagCompound saveData() {
 		NBTTagCompound compound = new NBTTagCompound();
 		
-		for(RPGBestiaryCard each : this.bestiary) {
+		for(BestiaryCard each : this.bestiary) {
 			compound.setTag(each.getCreatureType(), each.saveData());
 		}
 		
@@ -79,14 +79,14 @@ public class RPGBestiary {
 	
 	public void loadData(NBTTagCompound compound) {
 		for(String key : compound.getKeySet()) {
-			RPGBestiaryCard card = new RPGBestiaryCard();
+			BestiaryCard card = new BestiaryCard();
 			card.loadData(compound.getCompoundTag(key));
 			this.addMonster(card);
 		}
 	}
 	
-	public void fireAddingMonster(EntityPlayer player, RPGBestiaryCard card) {
-		for(RPGBestiaryListener listener : this.listeners) {
+	public void fireAddingMonster(EntityPlayer player, BestiaryCard card) {
+		for(BestiaryListener listener : this.listeners) {
 			listener.creatureIsAdded(player, card);
 		}
 	}

@@ -1,10 +1,10 @@
 package com.yanndub.rpg.events;
 
 import com.yanndub.rpg.MinecraftRPG;
-import com.yanndub.rpg.capabilities.bestiary.RPGBestiary;
-import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCapability;
-import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCard;
-import com.yanndub.rpg.listeners.RPGBestiaryListener;
+import com.yanndub.rpg.capabilities.bestiary.Bestiary;
+import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
+import com.yanndub.rpg.capabilities.bestiary.BestiaryCard;
+import com.yanndub.rpg.listeners.BestiaryListener;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -19,9 +19,9 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
-public class RPGPlayerEvent implements RPGBestiaryListener {
+public class RPGPlayerEvent implements BestiaryListener {
 	
-	private RPGBestiaryCapability entityCapability(Entity entity) {
+	private BestiaryCapability entityCapability(Entity entity) {
 		return entity.getCapability(MinecraftRPG.RPGPLAYER_CAP, null);
 	}
 	
@@ -38,7 +38,7 @@ public class RPGPlayerEvent implements RPGBestiaryListener {
 		if(event.getEntity() instanceof EntityCreature) {
 			if(event.getSource().getSourceOfDamage() instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) event.getSource().getSourceOfDamage();
-				RPGBestiary bestiary = this.entityCapability(player).getBestiary();
+				Bestiary bestiary = this.entityCapability(player).getBestiary();
 				EntityCreature creature = (EntityCreature) event.getEntity();
 				
 				bestiary.addRPGBestiaryListener(this);
@@ -56,8 +56,8 @@ public class RPGPlayerEvent implements RPGBestiaryListener {
 	public void onPlayerCloned(PlayerEvent.Clone event) {
 		if(event.isWasDeath()) {
 			if(event.getOriginal().hasCapability(MinecraftRPG.RPGPLAYER_CAP, null)) {
-				RPGBestiaryCapability cap = this.entityCapability(event.getOriginal());
-				RPGBestiaryCapability newCap = this.entityCapability(event.getEntityPlayer());
+				BestiaryCapability cap = this.entityCapability(event.getOriginal());
+				BestiaryCapability newCap = this.entityCapability(event.getEntityPlayer());
 				
 				newCap.setBestiary(cap.getBestiary());
 			}
@@ -76,11 +76,11 @@ public class RPGPlayerEvent implements RPGBestiaryListener {
 	public void onAttachCapability(AttachCapabilitiesEvent.Entity event) {
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 
-		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":RPGPLAYER_CAP"), new RPGBestiaryCapability((EntityPlayer) event.getEntity()));
+		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":RPGPLAYER_CAP"), new BestiaryCapability((EntityPlayer) event.getEntity()));
 	}
 
 	@Override
-	public void creatureIsAdded(EntityPlayer player, RPGBestiaryCard card) {
+	public void creatureIsAdded(EntityPlayer player, BestiaryCard card) {
 		player.addChatMessage(new TextComponentString(EntityList.getEntityString(card.getCreature()) + " has been added to the bestiary"));
 	}
 }
