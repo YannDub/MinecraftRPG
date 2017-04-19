@@ -1,65 +1,40 @@
 package com.yanndub.rpg.capabilities.bestiary;
 
-import java.util.concurrent.Callable;
-
 import com.yanndub.rpg.MinecraftRPG;
-import com.yanndub.rpg.network.PacketBestiaryCapability;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class BestiaryCapability implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
+public class BestiaryCapability implements ICapabilitySerializable<NBTBase> {
 	
 	private Bestiary bestiary;
 	
-	private EntityPlayer player;
 	
-	public BestiaryCapability(EntityPlayer player) {
-		this.player = player;
+	public BestiaryCapability() {
 		this.bestiary = new Bestiary();
 	}
 	
-	public void sync() {
-		PacketBestiaryCapability packet = new PacketBestiaryCapability(this.getBestiary());
-		if(!this.player.worldObj.isRemote) {
-			EntityPlayerMP playerMP = (EntityPlayerMP) this.player;
-			MinecraftRPG.network.sendTo(packet, playerMP);
-		} else {
-			MinecraftRPG.network.sendToServer(packet);
-		}
-	}
-	
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound compound = new NBTTagCompound();
-		
-		compound.setTag("bestiary", this.bestiary.saveData());
-		
-		return compound;
+	public NBTBase serializeNBT() {
+		return MinecraftRPG.BESTIARY_CAP.getStorage().writeNBT(MinecraftRPG.BESTIARY_CAP, MinecraftRPG.BESTIARY_CAP.getDefaultInstance(), null);
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		this.bestiary = new Bestiary();
-		
-		this.bestiary.loadData(nbt.getCompoundTag("bestiary"));
+	public void deserializeNBT(NBTBase nbt) {
+		MinecraftRPG.BESTIARY_CAP.getStorage().readNBT(MinecraftRPG.BESTIARY_CAP, MinecraftRPG.BESTIARY_CAP.getDefaultInstance(), null, nbt);
 	}
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return MinecraftRPG.RPGPLAYER_CAP != null && capability == MinecraftRPG.RPGPLAYER_CAP;
+		return MinecraftRPG.BESTIARY_CAP != null && capability == MinecraftRPG.BESTIARY_CAP;
 	}
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		return MinecraftRPG.RPGPLAYER_CAP != null && capability == MinecraftRPG.RPGPLAYER_CAP ? (T)this : null;
+		return MinecraftRPG.BESTIARY_CAP != null && capability == MinecraftRPG.BESTIARY_CAP ? MinecraftRPG.BESTIARY_CAP.<T>cast((MinecraftRPG.BESTIARY_CAP.getDefaultInstance())) : null;
 	}
 	
 	public Bestiary getBestiary() {
@@ -71,32 +46,7 @@ public class BestiaryCapability implements ICapabilityProvider, INBTSerializable
 	}
 	
 	public static void register() {
-		CapabilityManager.INSTANCE.register(BestiaryCapability.class, new BestiaryCapability.Storage(), new BestiaryCapability.Factory());
-	}
-	
-	private static class Storage implements Capability.IStorage<BestiaryCapability> {
-
-		@Override
-		public NBTBase writeNBT(Capability<BestiaryCapability> capability, BestiaryCapability instance,
-				EnumFacing side) {
-			return null;
-		}
-
-		@Override
-		public void readNBT(Capability<BestiaryCapability> capability, BestiaryCapability instance,
-				EnumFacing side, NBTBase nbt) {
-			
-		}
-		
-	}
-	
-	private static class Factory implements Callable<BestiaryCapability> {
-
-		@Override
-		public BestiaryCapability call() throws Exception {
-			return null;
-		}
-		
+		CapabilityManager.INSTANCE.register(IBestiary.class, new BestiaryStorage(), Bestiary.class);
 	}
 
 }

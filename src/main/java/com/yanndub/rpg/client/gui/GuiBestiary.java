@@ -37,7 +37,7 @@ public class GuiBestiary extends GuiScreen {
 	private int selected = -1;
 	
 	public GuiBestiary(EntityPlayer player) {
-		this.bestiary = player.getCapability(MinecraftRPG.RPGPLAYER_CAP, null).getBestiary();
+		this.bestiary = (Bestiary) player.getCapability(MinecraftRPG.BESTIARY_CAP, null);
 	}
 
 	public void initGui() {

@@ -4,6 +4,7 @@ import com.yanndub.rpg.MinecraftRPG;
 import com.yanndub.rpg.capabilities.bestiary.Bestiary;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCard;
+import com.yanndub.rpg.capabilities.bestiary.IBestiary;
 import com.yanndub.rpg.listeners.BestiaryListener;
 
 import net.minecraft.entity.Entity;
@@ -21,8 +22,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class RPGPlayerEvent implements BestiaryListener {
 	
-	private BestiaryCapability entityCapability(Entity entity) {
-		return entity.getCapability(MinecraftRPG.RPGPLAYER_CAP, null);
+	private IBestiary entityCapability(Entity entity) {
+		return entity.getCapability(MinecraftRPG.BESTIARY_CAP, null);
 	}
 	
 	@SubscribeEvent
@@ -30,7 +31,7 @@ public class RPGPlayerEvent implements BestiaryListener {
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 		
 		EntityPlayer player = (EntityPlayer) event.getEntity();
-		if(!player.worldObj.isRemote)this.entityCapability(player).sync();
+		if(!player.worldObj.isRemote)this.entityCapability(player).sync(player);
 	}
 	
 	@SubscribeEvent
@@ -38,14 +39,14 @@ public class RPGPlayerEvent implements BestiaryListener {
 		if(event.getEntity() instanceof EntityCreature) {
 			if(event.getSource().getSourceOfDamage() instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) event.getSource().getSourceOfDamage();
-				Bestiary bestiary = this.entityCapability(player).getBestiary();
+				Bestiary bestiary = (Bestiary) this.entityCapability(player);
 				EntityCreature creature = (EntityCreature) event.getEntity();
 				
 				bestiary.addRPGBestiaryListener(this);
 				
 				bestiary.addMonster(player, creature);
 				if(!player.worldObj.isRemote)
-					this.entityCapability(player).sync();
+					this.entityCapability(player).sync(player);
 			}
 			
 		}
@@ -55,11 +56,11 @@ public class RPGPlayerEvent implements BestiaryListener {
 	@SubscribeEvent
 	public void onPlayerCloned(PlayerEvent.Clone event) {
 		if(event.isWasDeath()) {
-			if(event.getOriginal().hasCapability(MinecraftRPG.RPGPLAYER_CAP, null)) {
-				BestiaryCapability cap = this.entityCapability(event.getOriginal());
-				BestiaryCapability newCap = this.entityCapability(event.getEntityPlayer());
+			if(event.getOriginal().hasCapability(MinecraftRPG.BESTIARY_CAP, null)) {
+				Bestiary cap = (Bestiary) this.entityCapability(event.getOriginal());
+				Bestiary newCap = (Bestiary) this.entityCapability(event.getEntityPlayer());
 				
-				newCap.setBestiary(cap.getBestiary());
+				newCap.setCreatures(cap.getCreatures());
 			}
 		}
 	}
@@ -68,7 +69,7 @@ public class RPGPlayerEvent implements BestiaryListener {
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		System.out.println("test respawn event");
 		if(!event.player.worldObj.isRemote) {
-			this.entityCapability(event.player).sync();
+			this.entityCapability(event.player).sync(event.player);
 		}
 	}
 	
@@ -76,7 +77,7 @@ public class RPGPlayerEvent implements BestiaryListener {
 	public void onAttachCapability(AttachCapabilitiesEvent.Entity event) {
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 
-		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":RPGPLAYER_CAP"), new BestiaryCapability((EntityPlayer) event.getEntity()));
+		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":BESTIARY_CAP"), new BestiaryCapability());
 	}
 
 	@Override

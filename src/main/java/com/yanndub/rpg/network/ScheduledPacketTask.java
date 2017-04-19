@@ -20,7 +20,7 @@ public class ScheduledPacketTask implements Runnable {
 	@Override
 	public void run() {
 		EntityPlayer player = this.player == null ? this.getPlayer() : this.player;
-		player.getCapability(MinecraftRPG.RPGPLAYER_CAP, null).setBestiary(message.getBestiary());
+		player.getCapability(MinecraftRPG.BESTIARY_CAP, null).setCreatures(message.getBestiary().getCreatures());
 	}
 	
 	@SideOnly(Side.CLIENT)

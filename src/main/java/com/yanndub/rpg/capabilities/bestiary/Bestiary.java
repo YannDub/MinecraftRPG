@@ -3,14 +3,17 @@ package com.yanndub.rpg.capabilities.bestiary;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yanndub.rpg.MinecraftRPG;
 import com.yanndub.rpg.listeners.BestiaryListener;
+import com.yanndub.rpg.network.PacketBestiaryCapability;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class Bestiary {
+public class Bestiary implements IBestiary {
 	
 	private List<BestiaryCard> bestiary;
 	private List<BestiaryListener> listeners;
@@ -67,27 +70,24 @@ public class Bestiary {
 		return this.bestiary;
 	}
 	
-	public NBTTagCompound saveData() {
-		NBTTagCompound compound = new NBTTagCompound();
-		
-		for(BestiaryCard each : this.bestiary) {
-			compound.setTag(each.getCreatureType(), each.saveData());
-		}
-		
-		return compound;
-	}
-	
-	public void loadData(NBTTagCompound compound) {
-		for(String key : compound.getKeySet()) {
-			BestiaryCard card = new BestiaryCard();
-			card.loadData(compound.getCompoundTag(key));
-			this.addMonster(card);
-		}
-	}
-	
 	public void fireAddingMonster(EntityPlayer player, BestiaryCard card) {
 		for(BestiaryListener listener : this.listeners) {
 			listener.creatureIsAdded(player, card);
 		}
+	}
+	
+	public void sync(EntityPlayer player) {
+		PacketBestiaryCapability packet = new PacketBestiaryCapability(this);
+		if(!player.worldObj.isRemote) {
+			EntityPlayerMP playerMP = (EntityPlayerMP) player;
+			MinecraftRPG.network.sendTo(packet, playerMP);
+		} else {
+			MinecraftRPG.network.sendToServer(packet);
+		}
+	}
+
+	@Override
+	public void setCreatures(List<BestiaryCard> bestiary) {
+		this.bestiary = bestiary;
 	}
 }

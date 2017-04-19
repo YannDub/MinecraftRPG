@@ -1,6 +1,7 @@
 package com.yanndub.rpg;
 
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
+import com.yanndub.rpg.capabilities.bestiary.IBestiary;
 import com.yanndub.rpg.handler.RPGGuiHandler;
 import com.yanndub.rpg.network.PacketBestiaryCapability;
 
@@ -22,8 +23,8 @@ public class MinecraftRPG
     public static final String MODID = "minecraftrpg";
     public static final String VERSION = "1.0";
     
-    @CapabilityInject(BestiaryCapability.class)
-    public static final Capability<BestiaryCapability> RPGPLAYER_CAP = null;
+    @CapabilityInject(IBestiary.class)
+    public static final Capability<IBestiary> BESTIARY_CAP = null;
     
     @SidedProxy(clientSide="com.yanndub.rpg.client.MinecraftRPGClient", serverSide="com.yanndub.rpg.server.MinecraftRPGServer")
     public static MinecraftRPGCommon proxy;
