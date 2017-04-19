@@ -1,9 +1,8 @@
-package com.yanndub.rpg.capabilities;
+package com.yanndub.rpg.capabilities.bestiary;
 
 import java.util.concurrent.Callable;
 
 import com.yanndub.rpg.MinecraftRPG;
-import com.yanndub.rpg.bestiary.RPGBestiary;
 import com.yanndub.rpg.network.RPGPacketBestiaryCapability;
 
 import net.minecraft.entity.player.EntityPlayer;

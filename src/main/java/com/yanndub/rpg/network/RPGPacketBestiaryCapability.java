@@ -1,7 +1,7 @@
 package com.yanndub.rpg.network;
 
-import com.yanndub.rpg.bestiary.RPGBestiary;
-import com.yanndub.rpg.bestiary.RPGBestiaryCard;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiary;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCard;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;

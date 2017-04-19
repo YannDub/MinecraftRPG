@@ -1,6 +1,6 @@
 package com.yanndub.rpg;
 
-import com.yanndub.rpg.capabilities.RPGBestiaryCapability;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCapability;
 import com.yanndub.rpg.handler.RPGGuiHandler;
 import com.yanndub.rpg.network.RPGPacketBestiaryCapability;
 

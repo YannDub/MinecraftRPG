@@ -16,8 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Mouse;
 
 import com.yanndub.rpg.MinecraftRPG;
-import com.yanndub.rpg.bestiary.RPGBestiary;
-import com.yanndub.rpg.bestiary.RPGBestiaryCard;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiary;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

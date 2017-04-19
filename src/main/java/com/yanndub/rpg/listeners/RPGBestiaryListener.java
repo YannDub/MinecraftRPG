@@ -1,6 +1,6 @@
 package com.yanndub.rpg.listeners;
 
-import com.yanndub.rpg.bestiary.RPGBestiaryCard;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCard;
 
 import net.minecraft.entity.player.EntityPlayer;
 

@@ -1,9 +1,9 @@
 package com.yanndub.rpg.events;
 
 import com.yanndub.rpg.MinecraftRPG;
-import com.yanndub.rpg.bestiary.RPGBestiary;
-import com.yanndub.rpg.bestiary.RPGBestiaryCard;
-import com.yanndub.rpg.capabilities.RPGBestiaryCapability;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiary;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCapability;
+import com.yanndub.rpg.capabilities.bestiary.RPGBestiaryCard;
 import com.yanndub.rpg.listeners.RPGBestiaryListener;
 
 import net.minecraft.entity.Entity;

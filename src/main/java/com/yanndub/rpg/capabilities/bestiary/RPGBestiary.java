@@ -1,4 +1,4 @@
-package com.yanndub.rpg.bestiary;
+package com.yanndub.rpg.capabilities.bestiary;
 
 import java.util.ArrayList;
 import java.util.List;
