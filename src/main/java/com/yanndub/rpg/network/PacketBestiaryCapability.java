@@ -1,14 +1,18 @@
 package com.yanndub.rpg.network;
 
+import com.yanndub.rpg.capabilities.CapabilityHandler;
 import com.yanndub.rpg.capabilities.bestiary.Bestiary;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCard;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketBestiaryCapability implements IMessage {
 	
@@ -67,5 +71,28 @@ public class PacketBestiaryCapability implements IMessage {
 			return null;
 		}
 		
+	}
+	
+	private static class ScheduledPacketTask implements Runnable {
+		
+		private EntityPlayer player;
+		private PacketBestiaryCapability message;
+		
+		public ScheduledPacketTask(EntityPlayer player, PacketBestiaryCapability message) {
+			this.player = player;
+			this.message = message;
+		}
+		
+		@Override
+		public void run() {
+			EntityPlayer player = this.player == null ? this.getPlayer() : this.player;
+			player.getCapability(CapabilityHandler.BESTIARY_CAP, null).setCreatures(message.getBestiary().getCreatures());
+		}
+		
+		@SideOnly(Side.CLIENT)
+		private EntityPlayer getPlayer() {
+			return Minecraft.getMinecraft().thePlayer;
+		}
+
 	}
 }
