@@ -1,6 +1,6 @@
 package com.yanndub.rpg.network;
 
-import com.yanndub.rpg.MinecraftRPG;
+import com.yanndub.rpg.capabilities.CapabilityHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +20,7 @@ public class ScheduledPacketTask implements Runnable {
 	@Override
 	public void run() {
 		EntityPlayer player = this.player == null ? this.getPlayer() : this.player;
-		player.getCapability(MinecraftRPG.BESTIARY_CAP, null).setCreatures(message.getBestiary().getCreatures());
+		player.getCapability(CapabilityHandler.BESTIARY_CAP, null).setCreatures(message.getBestiary().getCreatures());
 	}
 	
 	@SideOnly(Side.CLIENT)

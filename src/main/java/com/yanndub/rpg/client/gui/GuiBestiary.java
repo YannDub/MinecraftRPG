@@ -2,26 +2,20 @@ package com.yanndub.rpg.client.gui;
 
 import java.io.IOException;
 
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Mouse;
 
-import com.yanndub.rpg.MinecraftRPG;
+import com.yanndub.rpg.capabilities.CapabilityHandler;
 import com.yanndub.rpg.capabilities.bestiary.Bestiary;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GuiBestiary extends GuiScreen {
@@ -37,7 +31,7 @@ public class GuiBestiary extends GuiScreen {
 	private int selected = -1;
 	
 	public GuiBestiary(EntityPlayer player) {
-		this.bestiary = (Bestiary) player.getCapability(MinecraftRPG.BESTIARY_CAP, null);
+		this.bestiary = (Bestiary) player.getCapability(CapabilityHandler.BESTIARY_CAP, null);
 	}
 
 	public void initGui() {

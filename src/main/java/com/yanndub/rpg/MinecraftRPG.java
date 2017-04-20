@@ -4,6 +4,7 @@ import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
 import com.yanndub.rpg.capabilities.bestiary.IBestiary;
 import com.yanndub.rpg.handler.RPGGuiHandler;
 import com.yanndub.rpg.network.PacketBestiaryCapability;
+import com.yanndub.rpg.network.PacketMoneyCapability;
 
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -23,9 +24,6 @@ public class MinecraftRPG
     public static final String MODID = "minecraftrpg";
     public static final String VERSION = "1.0";
     
-    @CapabilityInject(IBestiary.class)
-    public static final Capability<IBestiary> BESTIARY_CAP = null;
-    
     @SidedProxy(clientSide="com.yanndub.rpg.client.MinecraftRPGClient", serverSide="com.yanndub.rpg.server.MinecraftRPGServer")
     public static MinecraftRPGCommon proxy;
     
@@ -44,6 +42,9 @@ public class MinecraftRPG
     	
     	network.registerMessage(PacketBestiaryCapability.ClientHandler.class, PacketBestiaryCapability.class, 3, Side.CLIENT);
     	network.registerMessage(PacketBestiaryCapability.ServerHandler.class, PacketBestiaryCapability.class, 3, Side.SERVER);
+    	
+    	network.registerMessage(PacketMoneyCapability.ClientHandler.class, PacketMoneyCapability.class, 4, Side.CLIENT);
+    	network.registerMessage(PacketMoneyCapability.ServerHandler.class, PacketMoneyCapability.class, 4, Side.SERVER);
     }
     
     @EventHandler
