@@ -1,6 +1,7 @@
 package com.yanndub.rpg.events;
 
 import com.yanndub.rpg.MinecraftRPG;
+import com.yanndub.rpg.capabilities.CapabilityHandler;
 import com.yanndub.rpg.capabilities.bestiary.Bestiary;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCard;
@@ -23,7 +24,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 public class RPGPlayerEvent implements BestiaryListener {
 	
 	private IBestiary entityCapability(Entity entity) {
-		return entity.getCapability(MinecraftRPG.BESTIARY_CAP, null);
+		return entity.getCapability(CapabilityHandler.BESTIARY_CAP, null);
 	}
 	
 	@SubscribeEvent
@@ -56,7 +57,7 @@ public class RPGPlayerEvent implements BestiaryListener {
 	@SubscribeEvent
 	public void onPlayerCloned(PlayerEvent.Clone event) {
 		if(event.isWasDeath()) {
-			if(event.getOriginal().hasCapability(MinecraftRPG.BESTIARY_CAP, null)) {
+			if(event.getOriginal().hasCapability(CapabilityHandler.BESTIARY_CAP, null)) {
 				Bestiary cap = (Bestiary) this.entityCapability(event.getOriginal());
 				Bestiary newCap = (Bestiary) this.entityCapability(event.getEntityPlayer());
 				
