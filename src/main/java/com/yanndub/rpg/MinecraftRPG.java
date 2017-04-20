@@ -2,6 +2,7 @@ package com.yanndub.rpg;
 
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
 import com.yanndub.rpg.capabilities.bestiary.IBestiary;
+import com.yanndub.rpg.capabilities.money.MoneyCapability;
 import com.yanndub.rpg.handler.RPGGuiHandler;
 import com.yanndub.rpg.network.PacketBestiaryCapability;
 import com.yanndub.rpg.network.PacketMoneyCapability;
@@ -54,5 +55,6 @@ public class MinecraftRPG
     	
     	
     	BestiaryCapability.register();
+    	MoneyCapability.register();
     }
 }
