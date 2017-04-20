@@ -6,6 +6,9 @@ import com.yanndub.rpg.capabilities.bestiary.Bestiary;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCard;
 import com.yanndub.rpg.capabilities.bestiary.IBestiary;
+import com.yanndub.rpg.capabilities.money.IMoney;
+import com.yanndub.rpg.capabilities.money.Money;
+import com.yanndub.rpg.capabilities.money.MoneyCapability;
 import com.yanndub.rpg.listeners.BestiaryListener;
 
 import net.minecraft.entity.Entity;
@@ -27,12 +30,19 @@ public class RPGPlayerEvent implements BestiaryListener {
 		return entity.getCapability(CapabilityHandler.BESTIARY_CAP, null);
 	}
 	
+	private IMoney entityMoney(Entity entity) {
+		return entity.getCapability(CapabilityHandler.MONEY_CAP, null);
+	}
+	
 	@SubscribeEvent
 	public void onPlayerSpawnInWorld(EntityJoinWorldEvent event) {
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 		
 		EntityPlayer player = (EntityPlayer) event.getEntity();
-		if(!player.worldObj.isRemote)this.entityCapability(player).sync(player);
+		if(!player.worldObj.isRemote) {
+			this.entityCapability(player).sync(player);
+			this.entityMoney(player).sync(player);
+		}
 	}
 	
 	@SubscribeEvent
@@ -63,14 +73,21 @@ public class RPGPlayerEvent implements BestiaryListener {
 				
 				newCap.setCreatures(cap.getCreatures());
 			}
+			
+			if(event.getOriginal().hasCapability(CapabilityHandler.MONEY_CAP, null)) {
+				Money cap = (Money) this.entityMoney(event.getOriginal());
+				Money newCap = (Money) this.entityMoney(event.getEntityPlayer());
+				
+				newCap.setMoney(cap.getMoney());
+			}
 		}
 	}
 	
 	@SubscribeEvent
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		System.out.println("test respawn event");
 		if(!event.player.worldObj.isRemote) {
 			this.entityCapability(event.player).sync(event.player);
+			this.entityMoney(event.player).sync(event.player);
 		}
 	}
 	
@@ -79,6 +96,7 @@ public class RPGPlayerEvent implements BestiaryListener {
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 
 		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":BESTIARY_CAP"), new BestiaryCapability());
+		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":MONEY_CAP"), new MoneyCapability());
 	}
 
 	@Override

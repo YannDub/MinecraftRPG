@@ -16,6 +16,15 @@ public class PacketMoneyCapability implements IMessage {
 	
 	private Money money;
 	
+	public PacketMoneyCapability() {
+		this(new Money());
+	}
+	
+	public PacketMoneyCapability(Money money) {
+		super();
+		this.money = money;
+	}
+	
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.money = new Money();

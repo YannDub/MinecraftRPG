@@ -41,7 +41,7 @@ public class Money implements IMoney {
 	@Override
 	public void sync(EntityPlayer player) {
 		if(!player.worldObj.isRemote) {
-			PacketMoneyCapability packet = new PacketMoneyCapability();
+			PacketMoneyCapability packet = new PacketMoneyCapability(this);
 			MinecraftRPG.network.sendTo(packet, (EntityPlayerMP) player);
 		}
 	}

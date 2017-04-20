@@ -1,20 +1,19 @@
 package com.yanndub.rpg;
 
 import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
-import com.yanndub.rpg.capabilities.bestiary.IBestiary;
 import com.yanndub.rpg.capabilities.money.MoneyCapability;
+import com.yanndub.rpg.commands.CommandMoney;
 import com.yanndub.rpg.handler.RPGGuiHandler;
 import com.yanndub.rpg.network.PacketBestiaryCapability;
 import com.yanndub.rpg.network.PacketMoneyCapability;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -56,5 +55,10 @@ public class MinecraftRPG
     	
     	BestiaryCapability.register();
     	MoneyCapability.register();
+    }
+    
+    @EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+    	event.registerServerCommand(new CommandMoney());
     }
 }

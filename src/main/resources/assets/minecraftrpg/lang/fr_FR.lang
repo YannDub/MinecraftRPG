@@ -1,0 +1,5 @@
+command.money.usage=money <add/remove> <joueur> <valeur>
+command.money.failed=Le jouer n'existe pas
+command.money.usage.add=money add <joueur> <valeur>
+command.money.usage.remove=money remove <joueur> <valeur>
+command.money.remove.failed=Le joueur n'a pas ce montant dans sa poche
