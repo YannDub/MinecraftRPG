@@ -57,5 +57,15 @@ public class BankData extends WorldSavedData{
 		}
 		return data;
 	}
+	
+	public String toString() {
+		String res = "";
+		for(Entry<UUID, Integer> entries : accounts.entrySet()) {
+			if(!res.equals(""))
+				res += ", ";
+			res += entries.getKey() + ":" + entries.getValue();
+		}
+		return res;
+	}
 
 }
