@@ -8,10 +8,13 @@ import org.lwjgl.input.Keyboard;
 import com.yanndub.rpg.MinecraftRPGCommon;
 import com.yanndub.rpg.client.event.KeyboardEvent;
 import com.yanndub.rpg.client.event.RenderGuiEvent;
+import com.yanndub.rpg.client.renderers.RenderArea;
+import com.yanndub.rpg.entities.area.EntityArea;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class MinecraftRPGClient extends MinecraftRPGCommon {
 	
@@ -21,6 +24,7 @@ public class MinecraftRPGClient extends MinecraftRPGCommon {
 	
 	public void preInit() {
 		super.preInit();
+		RenderingRegistry.registerEntityRenderingHandler(EntityArea.class, manager -> new RenderArea(manager));
 	}
 	
 	public void init() {
