@@ -26,12 +26,20 @@ public class BankData extends WorldSavedData{
 	}
 	
 	public void removeAmount(EntityPlayer player, int amount) {
-		this.addAmount(player, -amount);
+		this.removeAmount(player.getGameProfile().getId(), amount);
+	}
+	
+	public void removeAmount(UUID id, int amount) {
+		this.addAmount(id, -amount);
+	}
+	
+	public void addAmount(UUID id, int amount) {
+		this.markDirty();
+		accounts.put(id, accounts.get(id) + amount);
 	}
 	
 	public void addAmount(EntityPlayer player, int amount) {
-		this.markDirty();
-		accounts.put(player.getGameProfile().getId(), accounts.get(player.getGameProfile().getId()) + amount);
+		this.addAmount(player.getGameProfile().getId(), amount);
 	}
 
 	@Override
