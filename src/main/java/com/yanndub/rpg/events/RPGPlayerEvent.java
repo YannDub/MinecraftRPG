@@ -44,9 +44,9 @@ public class RPGPlayerEvent implements BestiaryListener {
 			this.entityCapability(player).sync(player);
 			this.entityMoney(player).sync(player);
 			
-			System.out.println("Create account");
-			BankData.get(player.worldObj).addAccountIfNotExist(player, 1000);
 		}
+		System.out.println("Create account");
+		BankData.get(player.worldObj).addAccountIfNotExist(player, 1000);
 	}
 	
 	@SubscribeEvent

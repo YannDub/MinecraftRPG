@@ -27,14 +27,19 @@ public class BankData extends WorldSavedData{
 		if(!accounts.containsKey(player.getGameProfile().getId())) {
 			accounts.put(player.getGameProfile().getId(), amount);
 		}
-		PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
-		MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
+		
+		if(!player.worldObj.isRemote) {			
+			PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
+			MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
+		}
 	}
 	
 	public void removeAmount(EntityPlayer player, int amount) {
 		this.removeAmount(player.getGameProfile().getId(), amount);
-		PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
-		MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
+		if(!player.worldObj.isRemote) {			
+			PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
+			MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
+		}
 	}
 	
 	public void removeAmount(UUID id, int amount) {
@@ -48,8 +53,10 @@ public class BankData extends WorldSavedData{
 	
 	public void addAmount(EntityPlayer player, int amount) {
 		this.addAmount(player.getGameProfile().getId(), amount);
-		PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
-		MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
+		if(!player.worldObj.isRemote) {			
+			PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
+			MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
+		}
 	}
 	
 	public int getAmountOf(UUID uuid) {

@@ -7,7 +7,9 @@ import com.yanndub.rpg.handler.RPGGuiHandler;
 import com.yanndub.rpg.network.PacketBankData;
 import com.yanndub.rpg.network.PacketBestiaryCapability;
 import com.yanndub.rpg.network.PacketMoneyCapability;
+import com.yanndub.rpg.utils.Config;
 
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -37,6 +39,11 @@ public class MinecraftRPG
     public void preInit(FMLPreInitializationEvent event) {
     	proxy.preInit();
     	
+    	//Config
+    	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+    	Config.startBankAccount = config.get("general", "startBankAccount", Config.startBankAccount).getInt();
+    	
+    	//Network
     	NetworkRegistry.INSTANCE.registerGuiHandler(this, new RPGGuiHandler());
 
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(MinecraftRPG.MODID);
