@@ -4,6 +4,7 @@ import com.yanndub.rpg.capabilities.bestiary.BestiaryCapability;
 import com.yanndub.rpg.capabilities.money.MoneyCapability;
 import com.yanndub.rpg.commands.CommandMoney;
 import com.yanndub.rpg.handler.RPGGuiHandler;
+import com.yanndub.rpg.network.PacketBankData;
 import com.yanndub.rpg.network.PacketBestiaryCapability;
 import com.yanndub.rpg.network.PacketMoneyCapability;
 
@@ -45,6 +46,9 @@ public class MinecraftRPG
     	
     	network.registerMessage(PacketMoneyCapability.ClientHandler.class, PacketMoneyCapability.class, 4, Side.CLIENT);
     	network.registerMessage(PacketMoneyCapability.ServerHandler.class, PacketMoneyCapability.class, 4, Side.SERVER);
+    	
+    	network.registerMessage(PacketBankData.ClientHandler.class, PacketBankData.class, 5, Side.CLIENT);
+    	network.registerMessage(PacketBankData.ServerHandler.class, PacketBankData.class, 5, Side.SERVER);
     }
     
     @EventHandler

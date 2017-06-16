@@ -9,6 +9,7 @@ import com.yanndub.rpg.capabilities.bestiary.IBestiary;
 import com.yanndub.rpg.capabilities.money.IMoney;
 import com.yanndub.rpg.capabilities.money.Money;
 import com.yanndub.rpg.capabilities.money.MoneyCapability;
+import com.yanndub.rpg.data.BankData;
 import com.yanndub.rpg.listeners.BestiaryListener;
 
 import net.minecraft.entity.Entity;
@@ -42,6 +43,9 @@ public class RPGPlayerEvent implements BestiaryListener {
 		if(!player.worldObj.isRemote) {
 			this.entityCapability(player).sync(player);
 			this.entityMoney(player).sync(player);
+			
+			System.out.println("Create account");
+			BankData.get(player.worldObj).addAccountIfNotExist(player, 1000);
 		}
 	}
 	
