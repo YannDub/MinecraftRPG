@@ -50,7 +50,7 @@ public class PacketBankData implements IMessage {
 
 		@Override
 		public IMessage onMessage(PacketBankData message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(BankData.get(ctx.getServerHandler().playerEntity.worldObj), message));
+			Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(BankData.get(ctx.getServerHandler().player.world), message));
 			return null;
 		}
 
@@ -84,7 +84,7 @@ public class PacketBankData implements IMessage {
 
 		@SideOnly(Side.CLIENT)
 		private BankData getBank() {
-			return BankData.get(Minecraft.getMinecraft().theWorld);
+			return BankData.get(Minecraft.getMinecraft().world);
 		}
 
 	}

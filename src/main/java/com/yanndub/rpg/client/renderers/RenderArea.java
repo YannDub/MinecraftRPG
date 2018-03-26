@@ -4,12 +4,13 @@ import org.lwjgl.opengl.GL11;
 
 import com.yanndub.rpg.entities.area.EntityArea;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -43,7 +44,7 @@ public class RenderArea extends Render<EntityArea> {
 		float pHalf = size / 2f;
 		
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer vb = tessellator.getBuffer();
+		BufferBuilder vb = tessellator.getBuffer();
 		
 		vb.begin(GL11.GL_TRIANGLES, DefaultVertexFormats.POSITION);
 		this.renderSquare(vb, mHalf, pHalf, 0, 1, pHalf, pHalf);
@@ -53,7 +54,7 @@ public class RenderArea extends Render<EntityArea> {
 		tessellator.draw();
 	}
 	
-	private void renderSquare(VertexBuffer vb, float xLeft, float xRight, float yBottom, float yUp, float zForward, float zBehind) {
+	private void renderSquare(BufferBuilder vb, float xLeft, float xRight, float yBottom, float yUp, float zForward, float zBehind) {
 		vb.pos(xLeft, yUp, zForward);
 		vb.pos(xLeft, yBottom, zForward);
 		vb.pos(xRight, yBottom, zBehind);

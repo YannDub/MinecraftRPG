@@ -40,27 +40,27 @@ public class RPGPlayerEvent implements BestiaryListener {
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 		
 		EntityPlayer player = (EntityPlayer) event.getEntity();
-		if(!player.worldObj.isRemote) {
+		if(!player.world.isRemote) {
 			this.entityCapability(player).sync(player);
 			this.entityMoney(player).sync(player);
 			
 		}
 		System.out.println("Create account");
-		BankData.get(player.worldObj).addAccountIfNotExist(player, 1000);
+		BankData.get(player.world).addAccountIfNotExist(player, 1000);
 	}
 	
 	@SubscribeEvent
 	public void onEntityCreatureDeath(LivingDeathEvent event) {
 		if(event.getEntity() instanceof EntityCreature) {
-			if(event.getSource().getSourceOfDamage() instanceof EntityPlayer) {
-				EntityPlayer player = (EntityPlayer) event.getSource().getSourceOfDamage();
+			if(event.getSource().getTrueSource() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
 				Bestiary bestiary = (Bestiary) this.entityCapability(player);
 				EntityCreature creature = (EntityCreature) event.getEntity();
 				
 				bestiary.addRPGBestiaryListener(this);
 				
 				bestiary.addMonster(player, creature);
-				if(!player.worldObj.isRemote)
+				if(!player.world.isRemote)
 					this.entityCapability(player).sync(player);
 			}
 			
@@ -89,22 +89,20 @@ public class RPGPlayerEvent implements BestiaryListener {
 	
 	@SubscribeEvent
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		if(!event.player.worldObj.isRemote) {
+		if(!event.player.world.isRemote) {
 			this.entityCapability(event.player).sync(event.player);
 			this.entityMoney(event.player).sync(event.player);
 		}
 	}
 	
 	@SubscribeEvent
-	public void onAttachCapability(AttachCapabilitiesEvent.Entity event) {
-		if(!(event.getEntity() instanceof EntityPlayer)) return;
-
+	public void onAttachCapability(AttachCapabilitiesEvent<EntityPlayer> event) {
 		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":BESTIARY_CAP"), new BestiaryCapability());
 		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":MONEY_CAP"), new MoneyCapability());
 	}
 
 	@Override
 	public void creatureIsAdded(EntityPlayer player, BestiaryCard card) {
-		player.addChatMessage(new TextComponentString(EntityList.getEntityString(card.getCreature()) + " has been added to the bestiary"));
+		player.sendMessage(new TextComponentString(EntityList.getEntityString(card.getCreature()) + " has been added to the bestiary"));
 	}
 }

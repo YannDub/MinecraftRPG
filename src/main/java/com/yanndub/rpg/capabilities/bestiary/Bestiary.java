@@ -77,7 +77,7 @@ public class Bestiary implements IBestiary {
 	
 	public void sync(EntityPlayer player) {
 		PacketBestiaryCapability packet = new PacketBestiaryCapability(this);
-		if(!player.worldObj.isRemote) {
+		if(!player.world.isRemote) {
 			EntityPlayerMP playerMP = (EntityPlayerMP) player;
 			MinecraftRPG.network.sendTo(packet, playerMP);
 		} else {

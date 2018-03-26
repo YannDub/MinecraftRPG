@@ -38,7 +38,7 @@ public class GuiBestiary extends GuiScreen {
 		this.listWidth = 0;
 
 		for(BestiaryCard card : this.bestiary.getCreatures()) {
-			listWidth = Math.max(this.listWidth, this.fontRendererObj.getStringWidth(card.getCreatureType()) + 10);
+			listWidth = Math.max(this.listWidth, this.fontRenderer.getStringWidth(card.getCreatureType()) + 10);
 		}
 
 		this.cardsList = new GuiSlotBestiaryCard(this, this.width / 4, 16);
@@ -70,16 +70,16 @@ public class GuiBestiary extends GuiScreen {
 
 	private void drawForeground(int middleWidth, int middleHeight) {
         if(card != null) {
-            this.drawCenteredString(this.fontRendererObj, EntityList.getEntityString(card.getCreature()), middleWidth, 10, 0xffffff);
+            this.drawCenteredString(this.fontRenderer, EntityList.getEntityString(card.getCreature()), middleWidth, 10, 0xffffff);
 
             this.mc.getTextureManager().bindTexture(ICONS);
             this.drawTexturedModalRect(middleWidth - 100, middleHeight + 30, 52, 0, 9, 9);
             if(card.getCreature().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
                 this.drawTexturedModalRect(middleWidth + 50, middleHeight + 30 - 9, 18, 94, 18, 18);
 
-            this.fontRendererObj.drawString("" + card.getCreature().getMaxHealth(), middleWidth - 89, middleHeight + 30, 0xffffff);
+            this.fontRenderer.drawString("" + card.getCreature().getMaxHealth(), middleWidth - 89, middleHeight + 30, 0xffffff);
             if(card.getCreature().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
-                this.fontRendererObj.drawString("" + card.getCreature().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue(), middleWidth + 70, middleHeight + 30, 0xffffff);
+                this.fontRenderer.drawString("" + card.getCreature().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue(), middleWidth + 70, middleHeight + 30, 0xffffff);
 
         }
     }
@@ -118,6 +118,6 @@ public class GuiBestiary extends GuiScreen {
     }
 	
 	public FontRenderer getFontRenderer() {
-		return this.fontRendererObj;
+		return this.fontRenderer;
 	}
 }

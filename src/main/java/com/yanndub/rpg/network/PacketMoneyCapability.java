@@ -44,7 +44,7 @@ public static class ServerHandler implements IMessageHandler<PacketMoneyCapabili
 
 	@Override
 	public IMessage onMessage(PacketMoneyCapability message, MessageContext ctx) {
-		Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(ctx.getServerHandler().playerEntity, message));
+		Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(ctx.getServerHandler().player, message));
 		return null;
 	}
 	
@@ -78,7 +78,7 @@ private static class ScheduledPacketTask implements Runnable {
 		
 		@SideOnly(Side.CLIENT)
 		private EntityPlayer getPlayer() {
-			return Minecraft.getMinecraft().thePlayer;
+			return Minecraft.getMinecraft().player;
 		}
 
 	}

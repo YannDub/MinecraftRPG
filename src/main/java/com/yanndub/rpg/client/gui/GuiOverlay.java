@@ -14,10 +14,10 @@ public class GuiOverlay extends Gui {
 		Minecraft mc = Minecraft.getMinecraft();
 		int width = scaled.getScaledWidth();
 		
-		String currentMoney = "$" + mc.thePlayer.getCapability(CapabilityHandler.MONEY_CAP, null).getMoney();
-		String currentMoneyInBank = "$" + BankData.get(mc.theWorld).getAmountOf(mc.thePlayer);
+		String currentMoney = "$" + mc.player.getCapability(CapabilityHandler.MONEY_CAP, null).getMoney();
+		String currentMoneyInBank = "$" + BankData.get(mc.world).getAmountOf(mc.player);
 		
-		mc.fontRendererObj.drawStringWithShadow(currentMoney, (width - currentMoney.length() * mc.fontRendererObj.FONT_HEIGHT), mc.fontRendererObj.FONT_HEIGHT, Integer.parseInt("00FF00", 16));
-		mc.fontRendererObj.drawStringWithShadow(currentMoneyInBank, (width - currentMoney.length() * mc.fontRendererObj.FONT_HEIGHT), mc.fontRendererObj.FONT_HEIGHT * 2, Integer.parseInt("AAFFAA", 16));
+		mc.fontRenderer.drawStringWithShadow(currentMoney, (width - currentMoney.length() * mc.fontRenderer.FONT_HEIGHT), mc.fontRenderer.FONT_HEIGHT, Integer.parseInt("00FF00", 16));
+		mc.fontRenderer.drawStringWithShadow(currentMoneyInBank, (width - currentMoney.length() * mc.fontRenderer.FONT_HEIGHT), mc.fontRenderer.FONT_HEIGHT * 2, Integer.parseInt("AAFFAA", 16));
 	}
 }

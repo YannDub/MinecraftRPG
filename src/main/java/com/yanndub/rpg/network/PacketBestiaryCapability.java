@@ -57,7 +57,7 @@ public class PacketBestiaryCapability implements IMessage {
 
 		@Override
 		public IMessage onMessage(PacketBestiaryCapability message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(ctx.getServerHandler().playerEntity, message));
+			Minecraft.getMinecraft().addScheduledTask(new ScheduledPacketTask(ctx.getServerHandler().player, message));
 			return null;
 		}
 		
@@ -91,7 +91,7 @@ public class PacketBestiaryCapability implements IMessage {
 		
 		@SideOnly(Side.CLIENT)
 		private EntityPlayer getPlayer() {
-			return Minecraft.getMinecraft().thePlayer;
+			return Minecraft.getMinecraft().player;
 		}
 
 	}

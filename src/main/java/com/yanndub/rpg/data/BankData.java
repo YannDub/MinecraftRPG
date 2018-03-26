@@ -11,7 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.storage.WorldSavedData;
 
 public class BankData extends WorldSavedData{
 
@@ -28,7 +28,7 @@ public class BankData extends WorldSavedData{
 			accounts.put(player.getGameProfile().getId(), amount);
 		}
 		
-		if(!player.worldObj.isRemote) {			
+		if(!player.world.isRemote) {			
 			PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
 			MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
 		}
@@ -36,7 +36,7 @@ public class BankData extends WorldSavedData{
 	
 	public void removeAmount(EntityPlayer player, int amount) {
 		this.removeAmount(player.getGameProfile().getId(), amount);
-		if(!player.worldObj.isRemote) {			
+		if(!player.world.isRemote) {			
 			PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
 			MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
 		}
@@ -53,7 +53,7 @@ public class BankData extends WorldSavedData{
 	
 	public void addAmount(EntityPlayer player, int amount) {
 		this.addAmount(player.getGameProfile().getId(), amount);
-		if(!player.worldObj.isRemote) {			
+		if(!player.world.isRemote) {			
 			PacketBankData message = new PacketBankData(player.getGameProfile().getId().toString(), amount);
 			MinecraftRPG.network.sendTo(message, (EntityPlayerMP) player); 
 		}
@@ -87,10 +87,10 @@ public class BankData extends WorldSavedData{
 	}
 	
 	public static BankData get(World world) {
-		BankData data = (BankData) world.loadItemData(BankData.class, ID);
+		BankData data = (BankData) world.loadData(BankData.class, ID);
 		if(data == null) {
 			data = new BankData();
-			world.setItemData(ID, data);
+			world.setData(ID, data);
 		}
 		return data;
 	}

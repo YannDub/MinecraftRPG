@@ -19,9 +19,9 @@ public class KeyboardEvent {
 	public void onEvent(KeyInputEvent event) {
 		Map<String, KeyBinding> keyBindings = MinecraftRPGClient.keyBindings;
 		
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayer player = Minecraft.getMinecraft().player;
 		
 		if(keyBindings.get(MinecraftRPGClient.OPEN_BESTIARY).isPressed())
-			player.openGui(MinecraftRPG.instance, GuiBestiary.ID, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+			player.openGui(MinecraftRPG.instance, GuiBestiary.ID, player.world, (int) player.posX, (int) player.posY, (int) player.posZ);
 	}
 }

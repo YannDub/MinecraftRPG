@@ -3,6 +3,7 @@ package com.yanndub.rpg.capabilities.bestiary;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,7 +37,7 @@ public class BestiaryCard {
 
 	@SideOnly(Side.CLIENT)
 	private EntityCreature createCreature(String type) {
-        EntityCreature creature = (EntityCreature) EntityList.createEntityByName(type, FMLClientHandler.instance().getWorldClient());
+        EntityCreature creature = (EntityCreature) EntityList.createEntityByIDFromName(new ResourceLocation(type), FMLClientHandler.instance().getWorldClient());
         creature.setAlwaysRenderNameTag(false);
         //if(creature instanceof  EntityAgeable) {
         //    ((EntityAgeable) creature).setGrowingAge(0);

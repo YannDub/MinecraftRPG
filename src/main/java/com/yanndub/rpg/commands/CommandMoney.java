@@ -19,25 +19,25 @@ public class CommandMoney extends CommandBase {
 
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "money";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender sender) {
+	public String getUsage(ICommandSender sender) {
 		return "command.money.usage";
 	}
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if(args.length <= 0) {
-			throw new WrongUsageException(this.getCommandUsage(sender));
+			throw new WrongUsageException(this.getUsage(sender));
 		}
 		
 		if(args[0].matches("add")) {
 			if(args.length != 3) {
-				sender.addChatMessage(new TextComponentTranslation(this.getCommandUsage(sender), new Object[0]));
-				sender.addChatMessage(new TextComponentTranslation("command.money.usage.add", new Object[0]));
+				sender.sendMessage(new TextComponentTranslation(this.getUsage(sender), new Object[0]));
+				sender.sendMessage(new TextComponentTranslation("command.money.usage.add", new Object[0]));
 			} else {
 				EntityPlayerMP player = server.getPlayerList().getPlayerByUsername(args[1]);
 				if(player == null)
@@ -50,13 +50,13 @@ public class CommandMoney extends CommandBase {
 					money.addMoney(amount);
 					money.sync(player);
 				} catch(Exception e) {
-					sender.addChatMessage(new TextComponentTranslation("command.money.usage.add", new Object[0]));
+					sender.sendMessage(new TextComponentTranslation("command.money.usage.add", new Object[0]));
 				}
 			}
 		} else if(args[0].matches("remove")) {
 			if(args.length != 3) {
-				sender.addChatMessage(new TextComponentTranslation(this.getCommandUsage(sender), new Object[0]));
-				sender.addChatMessage(new TextComponentTranslation("command.money.usage.remove", new Object[0]));
+				sender.sendMessage(new TextComponentTranslation(this.getUsage(sender), new Object[0]));
+				sender.sendMessage(new TextComponentTranslation("command.money.usage.remove", new Object[0]));
 			} else {
 				EntityPlayerMP player = server.getPlayerList().getPlayerByUsername(args[1]);
 				if(player == null)
@@ -69,20 +69,20 @@ public class CommandMoney extends CommandBase {
 					if(money.removeMoney(amount)) {
 						money.sync(player);
 					} else {
-						sender.addChatMessage(new TextComponentTranslation("command.money.remove.failed", new Object[0]));
+						sender.sendMessage(new TextComponentTranslation("command.money.remove.failed", new Object[0]));
 					}
 				} catch(Exception e) {
-					sender.addChatMessage(new TextComponentTranslation("command.money.usage.remove", new Object[0]));
+					sender.sendMessage(new TextComponentTranslation("command.money.usage.remove", new Object[0]));
 				}
 			}
 		}
 	}
 
 	@Override
-	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args,
+	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			BlockPos pos) {
 		return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] {"add", "remove"}) : args.length == 2
-				? getListOfStringsMatchingLastWord(args, server.getPlayerList().getAllUsernames()) : Collections.<String>emptyList();
+				? getListOfStringsMatchingLastWord(args, server.getPlayerList().getOnlinePlayerNames()) : Collections.<String>emptyList();
 	}
 
 }
