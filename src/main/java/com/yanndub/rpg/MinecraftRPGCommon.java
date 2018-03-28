@@ -15,6 +15,6 @@ public class MinecraftRPGCommon {
 	public void init() {
 		MinecraftForge.EVENT_BUS.register(new RPGPlayerEvent());
 		
-		EntityRegistry.registerModEntity(null, EntityArea.class, "Area", 1200, MinecraftRPG.instance, 40, 5, true);
+//		EntityRegistry.registerModEntity(null, EntityArea.class, "Area", 1200, MinecraftRPG.instance, 40, 5, true);
 	}
 }

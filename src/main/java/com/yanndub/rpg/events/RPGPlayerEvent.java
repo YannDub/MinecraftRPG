@@ -96,7 +96,9 @@ public class RPGPlayerEvent implements BestiaryListener {
 	}
 	
 	@SubscribeEvent
-	public void onAttachCapability(AttachCapabilitiesEvent<EntityPlayer> event) {
+	public void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
+		if(!(event.getObject() instanceof EntityPlayer)) return;
+		
 		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":BESTIARY_CAP"), new BestiaryCapability());
 		event.addCapability(new ResourceLocation(MinecraftRPG.MODID + ":MONEY_CAP"), new MoneyCapability());
 	}
